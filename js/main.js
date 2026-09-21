@@ -138,22 +138,6 @@
 
   var STORAGE_KEY = 'mouawad-lang';
 
-  /* Until the office number is supplied (token PHONE_TBD in the HTML), keep
-     the contact links harmless and show a short notice instead of the token. */
-  function fixPendingPhone(lang) {
-    document.querySelectorAll('a[href*="PHONE_TBD"]').forEach(function (a) {
-      a.setAttribute('href', '#contact');
-      a.removeAttribute('target');
-    });
-    document.querySelectorAll('.num, .footer-quick a').forEach(function (el) {
-      if (el.hasAttribute('data-pending') || el.textContent.indexOf('PHONE_TBD') > -1) {
-        el.setAttribute('data-pending', '1');
-        el.removeAttribute('dir');
-        el.textContent = lang === 'ar' ? 'يُضاف الرقم قريبًا' : 'Number coming soon';
-      }
-    });
-  }
-
   function applyLanguage(lang) {
     var dict = translations[lang] || translations.ar;
     document.documentElement.lang = lang;
@@ -170,7 +154,6 @@
       });
     });
     document.title = dict['meta.title'];
-    fixPendingPhone(lang);
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
   }
 
